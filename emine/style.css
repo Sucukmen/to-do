@@ -1,0 +1,131 @@
+/* Generelle Stile */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: beige;
+    text-align: center;
+    padding: 20px;
+}
+
+h1 {
+    color: #333;
+}
+
+/* Hamburger Menü */
+.menu-button {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    z-index: 10; /* Sicherstellen, dass das Menü-Button immer oben ist */
+}
+
+.menu-button div {
+    width: 30px;
+    height: 4px;
+    background: black;
+}
+
+/* Menü */
+.menu {
+    position: fixed;
+    top: 0;
+    left: -250px;
+    width: 250px;
+    height: 100%;
+    background: white;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+    transition: left 0.3s ease;
+    padding-top: 60px;
+    z-index: 9; /* Das Menü soll über anderem Inhalt angezeigt werden */
+}
+
+.menu.open {
+    left: 0; /* Menü nach rechts verschieben, wenn es geöffnet wird */
+}
+
+.menu a {
+    display: block;
+    padding: 10px;
+    color: black;
+    text-decoration: none;
+    font-size: 18px;
+    border-bottom: 1px solid #ddd;
+}
+
+/* To-Do Eingabe */
+.todo-input {
+    margin-bottom: 30px;
+}
+
+.todo-input input {
+    padding: 10px;
+    font-size: 16px;
+    margin: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.todo-input button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.todo-input button:hover {
+    background-color: #45a049;
+}
+
+#todo-list {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    width: 80%;
+    margin: 0 auto;
+}
+
+#todo-items {
+    list-style-type: none;
+}
+
+#todo-items li {
+    padding: 10px;
+    background-color: #f1f1f1;
+    margin: 10px 0;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#todo-items li .date {
+    font-size: 14px;
+    color: gray;
+}
+
+#todo-items li button {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+#todo-items li button:hover {
+    background-color: #d32f2f;
+}
