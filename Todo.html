@@ -3,97 +3,92 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Italianno&family=Karla:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-    <title>Edibe Teyze</title>
+    <link rel="stylesheet" href="style1.css">
+   <link rel="manifest" href="manifest.json">
+   <link rel="manifest" href="https://progressier.app/ZiQ5uKLKYA9D6AixORND/progressier.json"/>
+<script defer src="https://progressier.app/ZiQ5uKLKYA9D6AixORND/script.js"></script>
+    <title>Edibes To-Do</title>
 </head>
-<body>
+<body class="loaded">
+    <header>
+        <div class="hamburger" onclick="toggleMenu()">
+            <img src="menu1.png" alt="Menü">
+        </div>
+    </header>
 
-   
+    <nav id="menu" class="menu">
+        <ul>
+            <li><a href="Todo.html">🏠 Start</a></li>
+            <li><a href="zuletzt.html">📝 Zuletzt gelöscht</a></li>
+            <li><a href="kalender.html">⚙️ Kalender</a></li>
+        </ul>
+        <span class="credits">made by Enes Birdal</span>
+    </nav>
 
-    
-
-    <!-- Überschrift -->
-    <div class="überschrift">
-        <h1>Edibes To-Do</h1>
+    <div class="container">
+        <h1>Emines To-Do</h1>
+        <div class="todo-input">
+            <input type="text" id="todo-text" placeholder="Neue Aufgabe..." required>
+            <input type="datetime-local" id="todo-date" required>
+            <button onclick="addTodo()">➕ Hinzufügen</button>
+        </div>
+        <div id="todo-list">
+            <ul id="todo-items"></ul>
+        </div>
     </div>
 
-    <!-- To-Do Eingabe -->
-    <div class="todo-input">
-        <input type="text" id="todo-text" placeholder="Aufgabe eingeben">
-        <input type="datetime-local" id="todo-date">
-        <button onclick="addTodo()">Speichern</button>
-    </div>
-
-    <!-- Liste der gespeicherten To-Dos -->
-    <div id="todo-list">
-        <ul id="todo-items"></ul>
-    </div>
-
-    <!-- Script für das Menü und To-Dos -->
     <script>
-        // Funktion zum Öffnen und Schließen des Hamburger-Menüs
         function toggleMenu() {
-            let menu = document.getElementById("menu");
-            let button = document.querySelector(".menu-button");
-            menu.classList.toggle("open");
-            button.classList.toggle("open");
+            document.getElementById("menu").classList.toggle("open");
         }
 
-        // Event Listener für das Laden der Seite und Anzeigen der To-Dos
-        document.addEventListener("DOMContentLoaded", function () {
-            displayTodos(); // Anzeige der To-Dos
+        document.addEventListener("click", function(event) {
+            let menu = document.getElementById("menu");
+            let hamburger = document.querySelector(".hamburger");
+            if (!menu.contains(event.target) && !hamburger.contains(event.target)) {
+                menu.classList.remove("open");
+            }
         });
 
-        // Funktion zum Hinzufügen eines neuen To-Dos
         function addTodo() {
             const todoText = document.getElementById("todo-text").value;
             const todoDate = document.getElementById("todo-date").value;
 
             if (todoText && todoDate) {
                 let todos = JSON.parse(localStorage.getItem("todos")) || [];
-                const newTodo = {
-                    text: todoText,
-                    date: todoDate
-                };
-                todos.push(newTodo);
+                todos.unshift({ text: todoText, date: todoDate }); // Neueste Aufgabe oben einfügen
                 localStorage.setItem("todos", JSON.stringify(todos));
-
                 document.getElementById("todo-text").value = '';
                 document.getElementById("todo-date").value = '';
-
-                displayTodos(); // Anzeige nach dem Hinzufügen
+                displayTodos();
             } else {
-                alert("Bitte sowohl die Aufgabe als auch das Datum eingeben!");
+                alert("Bitte eine Aufgabe und ein Datum eingeben!");
             }
         }
 
-        // Funktion zum Anzeigen der gespeicherten To-Dos
         function displayTodos() {
             const todos = JSON.parse(localStorage.getItem("todos")) || [];
             const todoList = document.getElementById("todo-items");
-            todoList.innerHTML = ''; // Löscht die aktuelle Liste
-
+            todoList.innerHTML = '';
             todos.forEach((todo, index) => {
                 const li = document.createElement("li");
                 li.innerHTML = `
-                    <strong>${todo.text}</strong>
+                    <span>${todo.text}</span>
                     <div class="date">${new Date(todo.date).toLocaleString()}</div>
-                    <button onclick="deleteTodo(${index})">Löschen</button>
+                    <button onclick="deleteTodo(${index})">❌</button>
                 `;
                 todoList.appendChild(li);
             });
         }
 
-        // Funktion zum Löschen eines To-Dos
         function deleteTodo(index) {
             let todos = JSON.parse(localStorage.getItem("todos")) || [];
             todos.splice(index, 1);
             localStorage.setItem("todos", JSON.stringify(todos));
-            displayTodos(); // Liste neu anzeigen nach Löschen
+            displayTodos();
         }
+
+        document.addEventListener("DOMContentLoaded", displayTodos);
     </script>
 </body>
 </html>
